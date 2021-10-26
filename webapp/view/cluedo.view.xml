@@ -23,6 +23,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onBalzaalPress"
+								visible= "false"
 							/>
 							<Button
 								id="bibliotheekButton"
@@ -30,6 +31,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onBibliotheekPress"
+								visible= "false"
 							/>
 							<Button
 								id="biljartkamerButton"
@@ -37,6 +39,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onBiljartkamerPress"
+								visible= "false"
 							/>
 							<Button
 								id="eetkamerButton"
@@ -44,6 +47,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onEetkamerPress"
+								visible= "false"
 							/>
 							<Button
 								id="halButton"
@@ -51,6 +55,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onHalPress"
+								visible= "false"
 							/>
 							<Button
 								id="keukenButton"
@@ -58,6 +63,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onKeukenPress"
+								visible= "false"
 							/>
 							<Button
 								id="serreButton"
@@ -65,6 +71,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onSerrePress"
+								visible= "false"
 							/>
 							<Button
 								id="studeerkamerButton"
@@ -72,6 +79,7 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onStudeerkamerPress"
+								visible= "false"
 							/>
 							<Button
 								id="zitkamerButton"
@@ -79,16 +87,28 @@
 								type="Reject"
 								class="sapUiTinyMargin"
 								press="onZitkamerPress"
+								visible= "false"
 							/>
 							</HBox>
 							<!-- Grondplan -->
 							<Image
 								id="grondplanImg"
 								width="100%"
+								visible= "false"
 							/>
 							</VBox>
 							<!-- Startbutton -->
 							<VBox id="controlVBox" alignItems="End">
+							<!-- Start/Restart button -->
+								<Button
+									id="start"
+									activeIcon=""
+									icon="sap-icon://begin"
+									text="Start"
+									type="Accept"
+									width=""
+									press="onStartPress"
+								/>
 								<!-- Comboboxes -->
 								<HBox id="wapenHBox">
 									<ComboBox
@@ -146,16 +166,6 @@
 									text="Valideer waarden"
 									width=""
 									press="onValidatePress"
-								/>
-								<!-- Restart button -->
-								<Button
-									id="start"
-									activeIcon=""
-									icon="sap-icon://begin"
-									text="Start"
-									type="Accept"
-									width=""
-									press="onStartPress"
 								/>
 							</VBox>
 						</HBox>

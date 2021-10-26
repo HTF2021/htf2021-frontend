@@ -46,6 +46,17 @@ sap.ui.define([
 					startButton.setText("Restart");
 					startButton.setIcon("sap-icon://restart");
 					startButton.setType("Reject");
+
+					this.getView().byId("balzaalButton").setVisible(true);
+					this.getView().byId("bibliotheekButton").setVisible(true);
+					this.getView().byId("biljartkamerButton").setVisible(true);
+					this.getView().byId("eetkamerButton").setVisible(true);
+					this.getView().byId("halButton").setVisible(true);
+					this.getView().byId("keukenButton").setVisible(true);
+					this.getView().byId("serreButton").setVisible(true);
+					this.getView().byId("studeerkamerButton").setVisible(true);
+					this.getView().byId("zitkamerButton").setVisible(true);
+					this.getView().byId("grondplanImg").setVisible(true);
 				} else {
 					startButton.setText("Start");
 					startButton.setIcon("sap-icon://begin");
