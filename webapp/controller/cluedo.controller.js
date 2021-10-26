@@ -11,7 +11,19 @@ sap.ui.define([
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
 			
 			onInit: function () {
-				//var oModel = this.getView().getModel("CluedoModel");
+				$.ajax({
+					url: "http://localhost:3000/data",
+					type: "GET",
+					cache: false,
+					accept: "application/json"
+				}).then((oData, textstatus, jqXHR)=>{
+					this.getView().setModel(new sap.ui.model.json.JSONModel(oData), 'cluedoModel');
+					let grondplan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[1].url;
+					this.getView().byId("grondplanImg").setProperty("src", grondplan);
+
+				}).catch(()=>{
+					MessageToast.show("Could not load game data.");
+				});
 			},
 			_startNewGame: function(){
 				$.ajax({
