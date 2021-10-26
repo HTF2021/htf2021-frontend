@@ -61,7 +61,7 @@ sap.ui.define([
 			onValidatePress: function (evt) {
 				// TODO: Get data from model
 				//var oModel = this.getView().getModel("CluedoModel");
-				var answer = { // testdata
+				var answer = {
 					"wapen": {
 						"id": 1
 					},
@@ -71,14 +71,15 @@ sap.ui.define([
 					"kamer": {
 						"id": 3
 					}
-				}
+				};
 				if(answer != undefined){// TODO: Check data is filled in
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
 						type: "POST",
 						cache: false,
-						accept: "application/json",
-						data: answer
+						accept: "*/*",
+						data: answer,
+						contenttype: "application/json"
 					}).then((oData, textstatus, jqXHR)=>{
 						console.log(oData); // Log answer (testing)
 						if(oData.wapen){
