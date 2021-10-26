@@ -13,7 +13,7 @@
     "ach": "ach",
     "dataSources": {
 			"mainService": {
-				"uri": "localhost:3000/data",
+				"uri": "http://localhost:3000/data",
 				"type": "JSON"
 			}
 		}
@@ -64,7 +64,7 @@
           "bundleName": "com.flexso.htf2021.i18n.i18n"
         }
       },
-      "CluedoData": {
+      "cluedoData": {
 				"type": "sap.ui.model.json.JSONModel",
 				"dataSource": "mainService",
 				"preload": true,

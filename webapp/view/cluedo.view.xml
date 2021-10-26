@@ -14,12 +14,9 @@
 				>
 					<content>
 						<HBox id="grondplannHBox">
-							<!-- Grondplan -->
-							<Image
-								id="grondplanImg"
-								width="100%"
-							/>
+							<VBox>
 							<!-- Buttons voor kamers -->
+							<HBox>
 							<Button
 								id="balzaalButton"
 								text="Balzaal"
@@ -83,58 +80,59 @@
 								class="sapUiTinyMargin"
 								press="onZitkamerPress"
 							/>
+							</HBox>
+							<!-- Grondplan -->
+							<Image
+								id="grondplanImg"
+								width="100%"
+							/>
+							</VBox>
 							<!-- Startbutton -->
 							<VBox id="controlVBox" alignItems="End">
-								<!-- <Button
-									id="start"
-									activeIcon=""
-									icon="sap-icon://begin"
-									text="Start"
-									type="Accept"
-									width=""
-									press="onStartPress"
-								/> -->
 								<!-- Comboboxes -->
 								<HBox id="wapenHBox">
-									<MultiComboBox
+									<ComboBox
 										id="wapen"
 										maxWidth="650px"
 										items="{
-											path: '/CluedoModel/wapens',
+											path: 'cluedoData>/wapens',
 											sorter: { path: 'id' }
 										}">
-										<core:Item key="{id}" text="{name}" />
-									</MultiComboBox>
+											<core:ListItem key="{cluedoData>id}" text="{cluedoData>name}"/>
+									</ComboBox>
 									<core:Icon 
 										id="wapenIcon"
 										class="size1">
 									</core:Icon>
 								</HBox>
 								<HBox id="daderHBox">
-									<MultiComboBox
+									<ComboBox
 										id="dader"
 										maxWidth="650px"
 										items="{
-											path: '/CluedoModel/daders',
-											sorter: { path: 'id' }
+											path: 'cluedoData>/daders'
 										}">
-										<core:Item key="{id}" text="{name}" />
-									</MultiComboBox>
+										<items>
+											<core:Item key="{cluedoData>id}" text="{cluedoData>name}" />
+										</items>
+										
+									</ComboBox>
 									<core:Icon 
 										id="daderIcon"
 										class="size1">
 									</core:Icon>
 								</HBox>
 								<HBox id="kamerHBox">
-									<MultiComboBox
+									<ComboBox
 										id="kamer"
 										maxWidth="650px"
-										items="{
-											path: '/CluedoModel/kamers',
-											sorter: { path: 'id' }
-										}">
-										<core:Item key="{id}" text="{name}" />
-									</MultiComboBox>
+										items = "{path: 'cluedoData>/kamers'}"
+										>
+										<items>
+											<core:Item key="{cluedoData>id}" text="{cluedoData>name}" />
+										</items>
+										
+									</ComboBox>
 									<core:Icon 
 										id="kamerIcon"
 										class="size1">

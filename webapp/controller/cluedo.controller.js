@@ -1,11 +1,12 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/m/MessageToast"
+	"sap/m/MessageToast",
+	"sap/ui/model/json/JSONModel"
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function (Controller, MessageToast) {
+	function (Controller, MessageToast, JSONModel) {
 		"use strict";
 
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
@@ -17,10 +18,9 @@ sap.ui.define([
 					cache: false,
 					accept: "application/json"
 				}).then((oData, textstatus, jqXHR)=>{
-					this.getView().setModel(new sap.ui.model.json.JSONModel(oData), 'cluedoModel');
+					this.getView().setModel(new JSONModel(oData), 'cluedoModel');
 					let grondplan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[1].url;
 					this.getView().byId("grondplanImg").setProperty("src", grondplan);
-
 				}).catch(()=>{
 					MessageToast.show("Could not load game data.");
 				});
@@ -55,23 +55,20 @@ sap.ui.define([
 				this._startNewGame();
 				
 			},
-			// onRestartPress: function (evt) { // Nodig? Kunnen we niet beter 1 button maken en text veranderen naar restart op het einde?
-			//     this._startNewGame();
-			// },
 			onValidatePress: function (evt) {
 				// TODO: Get data from model
-				//var oModel = this.getView().getModel("CluedoModel");
-				var answer = { // testdata
+				var answer = {
 					"wapen": {
-						"id": 1
+						"id": this.getView().byId("wapen").getSelectedKey()
 					},
 					"dader": {
-						"id": 2
+						"id": this.getView().byId("dader").getSelectedKey()
 					},
 					"kamer": {
-						"id": 3
+						"id": this.getView().byId("kamer").getSelectedKey()
 					}
 				}
+				console.log(answer);
 				if(answer != undefined){// TODO: Check data is filled in
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
