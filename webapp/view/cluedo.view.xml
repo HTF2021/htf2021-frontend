@@ -1,0 +1,169 @@
+<mvc:View
+	controllerName="com.flexso.htf2021.controller.cluedo"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	displayBlock="true"
+	xmlns="sap.m"
+>
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page
+					id="page"
+					title="{i18n>title}"
+				>
+					<content>
+						<HBox id="grondplannHBox">
+							<!-- Grondplan -->
+							<Image
+								id="grondplanImg"
+								width="100%"
+							/>
+							<!-- Buttons voor kamers -->
+							<Button
+								id="balzaalButton"
+								text="Balzaal"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onBalzaalPress"
+							/>
+							<Button
+								id="bibliotheekButton"
+								text="Bibliotheek"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onBibliotheekPress"
+							/>
+							<Button
+								id="biljartkamerButton"
+								text="Biljartkamer"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onBiljartkamerPress"
+							/>
+							<Button
+								id="eetkamerButton"
+								text="Eetkamer"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onEetkamerPress"
+							/>
+							<Button
+								id="halButton"
+								text="Hal"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onHalPress"
+							/>
+							<Button
+								id="keukenButton"
+								text="Keuken"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onKeukenPress"
+							/>
+							<Button
+								id="serreButton"
+								text="Serre"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onSerrePress"
+							/>
+							<Button
+								id="studeerkamerButton"
+								text="Studeerkamer"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onStudeerkamerPress"
+							/>
+							<Button
+								id="zitkamerButton"
+								text="Zitkamer"
+								type="Reject"
+								class="sapUiTinyMargin"
+								press="onZitkamerPress"
+							/>
+							<!-- Startbutton -->
+							<VBox id="controlVBox" alignItems="End">
+								<!-- <Button
+									id="start"
+									activeIcon=""
+									icon="sap-icon://begin"
+									text="Start"
+									type="Accept"
+									width=""
+									press="onStartPress"
+								/> -->
+								<!-- Comboboxes -->
+								<HBox id="wapenHBox">
+									<MultiComboBox
+										id="wapen"
+										maxWidth="650px"
+										items="{
+											path: '/CluedoModel/wapens',
+											sorter: { path: 'id' }
+										}">
+										<core:Item key="{id}" text="{name}" />
+									</MultiComboBox>
+									<core:Icon 
+										id="wapenIcon"
+										class="size1">
+									</core:Icon>
+								</HBox>
+								<HBox id="daderHBox">
+									<MultiComboBox
+										id="dader"
+										maxWidth="650px"
+										items="{
+											path: '/CluedoModel/daders',
+											sorter: { path: 'id' }
+										}">
+										<core:Item key="{id}" text="{name}" />
+									</MultiComboBox>
+									<core:Icon 
+										id="daderIcon"
+										class="size1">
+									</core:Icon>
+								</HBox>
+								<HBox id="kamerHBox">
+									<MultiComboBox
+										id="kamer"
+										maxWidth="650px"
+										items="{
+											path: '/CluedoModel/kamers',
+											sorter: { path: 'id' }
+										}">
+										<core:Item key="{id}" text="{name}" />
+									</MultiComboBox>
+									<core:Icon 
+										id="kamerIcon"
+										class="size1">
+									</core:Icon>
+								</HBox>
+								<!-- Validate button -->
+								<Button
+									id="valideer"
+									activeIcon=""
+									icon="sap-icon://validate"
+									text="Valideer waarden"
+									width=""
+									press="onValidatePress"
+								/>
+								<!-- Restart button -->
+								<Button
+									id="start"
+									activeIcon=""
+									icon="sap-icon://begin"
+									text="Start"
+									type="Accept"
+									width=""
+									press="onStartPress"
+								/>
+							</VBox>
+						</HBox>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

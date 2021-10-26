@@ -1,0 +1,115 @@
+{
+  "_version": "1.32.0",
+  "sap.app": {
+    "id": "com.flexso.htf2021",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "ach": "ach",
+    "dataSources": {
+			"mainService": {
+				"uri": "localhost:3000/data",
+				"type": "JSON"
+			}
+		}
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://task",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    },
+    "fullWidth": true
+  },
+
+  "sap.ui5": {
+    "flexEnabled": false,
+    "rootView": {
+      "viewName": "com.flexso.htf2021.view.cluedo",
+      "type": "XML",
+      "async": true,
+      "id": "cluedo"
+    },
+    "dependencies": {
+			"minUI5Version": "1.94.1",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.ui.layout": {},
+        "sap.f": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.flexso.htf2021.i18n.i18n"
+        }
+      },
+      "CluedoData": {
+				"type": "sap.ui.model.json.JSONModel",
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"refreshAfterChange": true,
+					"defaultCountMode": "Request",
+					"defaultOperationMode": "Server",
+					"defaultUpdateMethod":"PUT"
+				}
+			}
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "com.flexso.htf2021.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "Routecluedo",
+          "pattern": "Routecluedo",
+          "target": ["Targetcluedo"]
+        }
+      ],
+      "targets": {
+        "Targetcluedo": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "cluedo",
+          "viewName": "cluedo"
+        }
+      }
+    }
+  }
+}
