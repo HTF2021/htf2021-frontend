@@ -100,20 +100,33 @@
 							<!-- Startbutton -->
 							<VBox id="controlVBox" alignItems="End">
 							<!-- Start/Restart button -->
+							<Title
+								id="startTitle"
+								text="Welkom bij Flexso cluedo, klik start om een nieuw spel te beginnen."
+								level="H1"
+							/>
+							<Image
+								id= "startImage"
+								width = "75%"
+							/>
 								<Button
 									id="start"
 									activeIcon=""
 									icon="sap-icon://begin"
 									text="Start"
 									type="Accept"
-									width=""
+									width="210px"
 									press="onStartPress"
+									class="sapUiTinyMargin"
 								/>
 								<!-- Comboboxes -->
 								<HBox id="wapenHBox">
 									<ComboBox
 										id="wapen"
+										visible= "false"
+										width= "210px"
 										maxWidth="650px"
+										class="sapUiTinyMargin"
 										items="{
 											path: 'cluedoData>/wapens',
 											sorter: { path: 'id' }
@@ -128,7 +141,10 @@
 								<HBox id="daderHBox">
 									<ComboBox
 										id="dader"
+										visible= "false"
+										width= "210px"
 										maxWidth="650px"
+										class="sapUiTinyMargin"
 										items="{
 											path: 'cluedoData>/daders'
 										}">
@@ -145,7 +161,11 @@
 								<HBox id="kamerHBox">
 									<ComboBox
 										id="kamer"
+										editable= "false"
+										visible= "false"
+										width= "210px"
 										maxWidth="650px"
+										class="sapUiTinyMargin"
 										items = "{path: 'cluedoData>/kamers'}"
 										>
 										<items>
@@ -161,11 +181,13 @@
 								<!-- Validate button -->
 								<Button
 									id="valideer"
+									visible= "false"
 									activeIcon=""
 									icon="sap-icon://validate"
 									text="Valideer waarden"
-									width=""
+									width="210px"
 									press="onValidatePress"
+									class="sapUiTinyMargin"
 								/>
 							</VBox>
 						</HBox>
