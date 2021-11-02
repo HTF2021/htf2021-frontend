@@ -47,7 +47,7 @@ sap.ui.define([
 				var startButton = this.getView().byId("start");
 				if (startButton.getText() == "Start") {
 					this.getView().byId("startImage").setVisible(false);
-					this.getView().byId("startTitle").setVisible(false);
+					//this.getView().byId("startTitle").setVisible(false);
 					startButton.setText("Restart");
 					startButton.setIcon("sap-icon://restart");
 					startButton.setType("Reject");
@@ -81,13 +81,13 @@ sap.ui.define([
 				// TODO: Get data from model
 				var answer = {
 					"wapen": {
-						"id": this.getView().byId("wapen").getSelectedKey()
+						"id": parseInt(this.getView().byId("wapen").getSelectedKey())
 					},
 					"dader": {
-						"id": this.getView().byId("dader").getSelectedKey()
+						"id": parseInt(this.getView().byId("dader").getSelectedKey())
 					},
 					"kamer": {
-						"id": this.getView().byId("kamer").getSelectedKey()
+						"id": parseInt(this.getView().byId("kamer").getSelectedKey())
 					}
 				}
 				console.log(answer);
@@ -101,19 +101,19 @@ sap.ui.define([
 						contenttype: "application/json"
 					}).then((oData, textstatus, jqXHR)=>{
 						console.log(oData); // Log answer (testing)
-						if(oData.wapen){
+						if(oData.checks.wapen){
 							// TO TEST: Set wapen guess correct
 							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
 						} else {
 							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
 						}
-						if(oData.dader){
+						if(oData.checks.dader){
 							// TO TEST: Set dader guess correct
 							this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
 						} else {
 							this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
 						}
-						if(oData.kamer){
+						if(oData.checks.kamer){
 							// TO TEST: Set kamer guess correct
 							this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
 						} else {

@@ -98,13 +98,18 @@
 							/>
 							</VBox>
 							<!-- Startbutton -->
-							<VBox id="controlVBox" alignItems="End">
+							<VBox id="controlVBox" alignItems="Start">
 							<!-- Start/Restart button -->
-							<Title
+							<!-- <Toolbar>
+							<ToolbarSpacer/>
+								<Title
 								id="startTitle"
-								text="Welkom bij Flexso cluedo, klik start om een nieuw spel te beginnen."
+								text="Welkom bij Flexso cluedo, duik in een kamer en ontmasker de moordenaar."
 								level="H1"
 							/>
+							<ToolbarSpacer/>
+							</Toolbar> -->
+							
 							<Image
 								id= "startImage"
 								width = "75%"
