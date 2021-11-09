@@ -10,7 +10,13 @@
     "title": "{{appTitle}}",
     "description": "{{appDescription}}",
     "resources": "resources.json",
-    "ach": "ach"
+    "ach": "ach",
+    "dataSources": {
+			"mainService": {
+				"uri": "http://localhost:3000/data",
+				"type": "JSON"
+			}
+		}
   },
   "sap.ui": {
     "technology": "UI5",
@@ -57,7 +63,19 @@
         "settings": {
           "bundleName": "com.flexso.htf2021.i18n.i18n"
         }
-      }
+      },
+      "cluedoData": {
+				"type": "sap.ui.model.json.JSONModel",
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"refreshAfterChange": true,
+					"defaultCountMode": "Request",
+					"defaultOperationMode": "Server",
+					"defaultUpdateMethod":"PUT"
+				}
+			}
     },
     "resources": {
       "css": [

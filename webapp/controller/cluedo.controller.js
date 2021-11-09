@@ -12,23 +12,11 @@ sap.ui.define([
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
 			
 			onInit: function () {
-				let aantalBots = 4;
-				let killer = true;
-
-				var oStartData = {
-					oStartData: {
-						"aantalBots": aantalBots,
-						"killer": killer 
-					}
-				};
-
 				$.ajax({
 					url: "http://localhost:3000/data",
-					type: "POST",
+					type: "GET",
 					cache: false,
-					accept: "*/*",
-					data: oStartData,
-					contenttype: "application/json"
+					accept: "application/json"
 				}).then((oData, textstatus, jqXHR)=>{
 					this.getView().setModel(new JSONModel(oData), 'cluedoModel');
 					let grondplan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[1].url;
