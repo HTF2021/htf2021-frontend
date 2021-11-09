@@ -114,6 +114,26 @@
 								id= "startImage"
 								width = "75%"
 							/>
+							<HBox id="botKillerHBox">
+							<HBox>
+								<Label text="Add some bots: " class="sapUiSmallMargin"/>
+								<Slider id="amountBots" min="0" max="4" enableTickmarks="true" >
+									<ResponsiveScale tickmarksBetweenLabels="1"/>
+								</Slider>
+								<!-- <Input
+									id="inputNumber"
+									type="Number"
+									placeholder="Enter a max of 4 bots" /> -->
+							</HBox>
+							<HBox>
+								<Label text="Play with killer: " class="sapUiSmallMargin"/>
+								<Switch id="playWithKiller" type="AcceptReject" >
+									<layoutData>
+										<FlexItemData growFactor="1" />
+									</layoutData>
+								</Switch>
+							</HBox>
+							</HBox>	
 								<Button
 									id="start"
 									activeIcon=""

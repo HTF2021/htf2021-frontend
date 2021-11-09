@@ -1,56 +1,61 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/m/MessageToast",
-	"sap/ui/model/json/JSONModel"
+	"sap/ui/model/json/JSONModel",
+	"sap/m/Dialog",
+	"sap/m/DialogType",
+	"sap/m/Button",
+	"sap/m/Text"
 ],
 	/**
 	 * @param {typeof sap.ui.core.mvc.Controller} Controller
 	 */
-	function (Controller, MessageToast, JSONModel) {
+	function (Controller,
+		MessageToast,
+		JSONModel,
+		Dialog,
+		DialogType,
+		Button,
+		Text) {
 		"use strict";
-
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
-			
+
 			onInit: function () {
 				$.ajax({
 					url: "http://localhost:3000/data",
 					type: "GET",
 					cache: false,
 					accept: "application/json"
-				}).then((oData, textstatus, jqXHR)=>{
+				}).then((oData, textstatus, jqXHR) => {
 					this.getView().setModel(new JSONModel(oData), 'cluedoModel');
 					let grondplan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[1].url;
 					this.getView().byId("grondplanImg").setProperty("src", grondplan);
 
 					let startPlan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[0].url;
 					this.getView().byId("startImage").setProperty("src", startPlan);
-				}).catch(()=>{
+				}).catch(() => {
 					MessageToast.show("Could not load game data.");
 				});
 			},
-			_startNewGame: function(){
+			_startNewGame: function () {
 				$.ajax({
 					url: "http://localhost:3000/new_solution",
 					type: "GET",
 					cache: false,
 					accept: "application/json"
-				}).then((oData, textstatus, jqXHR)=>{
-					console.log(oData); // Log answer (testing)
-					// TODO: Start new game (visible / hidden, enable / disable)?
+				}).then((oData, textstatus, jqXHR) => {
 					MessageToast.show("New game started!");
-				}).catch(()=>{
+				}).catch(() => {
 					MessageToast.show("Could not start new game.");
 				});
 			},
-	
-			onStartPress: function (evt) {
+
+			onStartPress: function () {
 				var startButton = this.getView().byId("start");
 				if (startButton.getText() == "Start") {
 					this.getView().byId("startImage").setVisible(false);
-					//this.getView().byId("startTitle").setVisible(false);
-					startButton.setText("Restart");
-					startButton.setIcon("sap-icon://restart");
-					startButton.setType("Reject");
+					startButton.setVisible(false);
+					this.getView().byId("botKillerHBox").setVisible(false);
 
 					this.getView().byId("balzaalButton").setVisible(true);
 					this.getView().byId("bibliotheekButton").setVisible(true);
@@ -68,17 +73,22 @@ sap.ui.define([
 					this.getView().byId("kamer").setVisible(true);
 					this.getView().byId("valideer").setVisible(true);
 
+					console.log(this.getView().byId("amountBots").getValue());
+					console.log(this.getView().byId("playWithKiller").getState());
 				} else {
-					startButton.setText("Start");
-					startButton.setIcon("sap-icon://begin");
-					startButton.setType("Accept");
+					this.getView().byId("wapen").setValue(null);
+					this.getView().byId("dader").setValue(null);
+					this.getView().byId("kamer").setValue(null);
+
+					this.getView().byId('daderIcon').setVisible(false);
+					this.getView().byId('wapenIcon').setVisible(false);
+					this.getView().byId('kamerIcon').setVisible(false);
 				}
-	
+
 				this._startNewGame();
-				
+
 			},
 			onValidatePress: function (evt) {
-				// TODO: Get data from model
 				var answer = {
 					"wapen": {
 						"id": parseInt(this.getView().byId("wapen").getSelectedKey())
@@ -91,7 +101,7 @@ sap.ui.define([
 					}
 				}
 				console.log(answer);
-				if(answer != undefined){// TODO: Check data is filled in
+				if (answer != undefined) {
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
 						type: "POST",
@@ -99,32 +109,54 @@ sap.ui.define([
 						accept: "*/*",
 						data: answer,
 						contenttype: "application/json"
-					}).then((oData, textstatus, jqXHR)=>{
-						console.log(oData); // Log answer (testing)
-						if(oData.checks.wapen){
-							// TO TEST: Set wapen guess correct
+					}).then((oData, textstatus, jqXHR) => {
+						if (oData.checks.dader === true && oData.checks.wapen === true && oData.checks.kamer === true) {
 							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
-						} else {
-							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
-						}
-						if(oData.checks.dader){
-							// TO TEST: Set dader guess correct
-							this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
-						} else {
-							this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
-						}
-						if(oData.checks.kamer){
-							// TO TEST: Set kamer guess correct
 							this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
+							this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
+
+							if (!this.oEscapePreventDialog) {
+								this.oEscapePreventDialog = new Dialog({
+									title: "Congrats you win!",
+									content: new Text({ text: "Congrats you won this game of Flexso Cluedo!" }),
+									type: DialogType.Message,
+									buttons: [
+										new Button({
+											text: "Play again",
+											press: function () {
+												this.oEscapePreventDialog.close();
+												this.onStartPress();
+											}.bind(this)
+										})
+									]
+								});
+							}
+							this.oEscapePreventDialog.open();
+
+
+							this.oDefaultDialog.open();
 						} else {
-							this.getView().byId('kamerIcon').setProperty("src", "sap-icon://decline");
+							if (oData.checks.wapen) {
+								this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
+							} else {
+								this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
+							}
+							if (oData.checks.dader) {
+								this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
+							} else {
+								this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
+							}
+							if (oData.checks.kamer) {
+								this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
+							} else {
+								this.getView().byId('kamerIcon').setProperty("src", "sap-icon://decline");
+							}
 						}
-					}).catch(()=>{
+					}).catch(() => {
 						MessageToast.show("Could check the answer. Please try again.");
 					});
 				}
 			},
-			// TODO: On kamer select: select corresponding kamer in dropdown 
 			onBalzaalPress: function () {
 				MessageToast.show("Balzaal");
 				this.getView().byId("kamer").setSelectedKey("0");
@@ -189,7 +221,7 @@ sap.ui.define([
 				MessageToast.show("Hal");
 				this.getView().byId("kamer").setSelectedKey("4");
 				this.getView().byId("kamer").setValue("Hal");
-				
+
 				this.getView().byId("balzaalButton").setType("Reject");
 				this.getView().byId("bibliotheekButton").setType("Reject");
 				this.getView().byId("biljartkamerButton").setType("Reject");
@@ -249,7 +281,7 @@ sap.ui.define([
 				MessageToast.show("Zitkamer");
 				this.getView().byId("kamer").setSelectedKey("8");
 				this.getView().byId("kamer").setValue("Zitkamer");
-				
+
 				this.getView().byId("balzaalButton").setType("Reject");
 				this.getView().byId("bibliotheekButton").setType("Reject");
 				this.getView().byId("biljartkamerButton").setType("Reject");
