@@ -89,7 +89,12 @@ sap.ui.define([
 
 			},
 			onValidatePress: function (evt) {
-				var answer = {
+				console.log(this.getView().byId("amountBots").getValue());
+				console.log(this.getView().byId("playWithKiller").getState());
+
+				let amountOfBots = this.getView().byId("amountBots").getValue();
+				let killerActivated = this.getView().byId("playWithKiller").getState();
+				let answer = {
 					"wapen": {
 						"id": parseInt(this.getView().byId("wapen").getSelectedKey())
 					},
@@ -100,14 +105,21 @@ sap.ui.define([
 						"id": parseInt(this.getView().byId("kamer").getSelectedKey())
 					}
 				}
-				console.log(answer);
-				if (answer != undefined) {
+				var oData = {
+					data: {
+						answer: answer,
+						amountOfBots: amountOfBots,
+						killerActivated, killerActivated
+					}
+				}
+				//console.log(answer);
+				if(answer != undefined){// TODO: Check data is filled in
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
 						type: "POST",
 						cache: false,
 						accept: "*/*",
-						data: answer,
+						data: oData,
 						contenttype: "application/json"
 					}).then((oData, textstatus, jqXHR) => {
 						if (oData.checks.dader === true && oData.checks.wapen === true && oData.checks.kamer === true) {
