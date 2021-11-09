@@ -78,8 +78,9 @@ sap.ui.define([
 				
 			},
 			onValidatePress: function (evt) {
-				// TODO: Get data from model
-				var answer = {
+				let amountOfBots = 4;
+				let killerActivated = false;
+				let answer = {
 					"wapen": {
 						"id": parseInt(this.getView().byId("wapen").getSelectedKey())
 					},
@@ -90,17 +91,24 @@ sap.ui.define([
 						"id": parseInt(this.getView().byId("kamer").getSelectedKey())
 					}
 				}
-				console.log(answer);
+				var oData = {
+					data: {
+						answer: answer,
+						amountOfBots: amountOfBots,
+						killerActivated, killerActivated
+					}
+				}
+				//console.log(answer);
 				if(answer != undefined){// TODO: Check data is filled in
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
 						type: "POST",
 						cache: false,
 						accept: "*/*",
-						data: answer,
+						data: oData,
 						contenttype: "application/json"
 					}).then((oData, textstatus, jqXHR)=>{
-						console.log(oData); // Log answer (testing)
+						//console.log(oData); // Log answer (testing)
 						if(oData.checks.wapen){
 							// TO TEST: Set wapen guess correct
 							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
