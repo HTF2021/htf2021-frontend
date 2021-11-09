@@ -7,9 +7,6 @@ sap.ui.define([
 	"sap/m/Button",
 	"sap/m/Text"
 ],
-	/**
-	 * @param {typeof sap.ui.core.mvc.Controller} Controller
-	 */
 	function (Controller,
 		MessageToast,
 		JSONModel,
@@ -53,6 +50,7 @@ sap.ui.define([
 			onStartPress: function () {
 				var startButton = this.getView().byId("start");
 				if (startButton.getText() == "Start") {
+					startButton.setText("game started")
 					this.getView().byId("startImage").setVisible(false);
 					startButton.setVisible(false);
 					this.getView().byId("botKillerHBox").setVisible(false);
@@ -89,9 +87,6 @@ sap.ui.define([
 
 			},
 			onValidatePress: function (evt) {
-				console.log(this.getView().byId("amountBots").getValue());
-				console.log(this.getView().byId("playWithKiller").getState());
-
 				let amountOfBots = this.getView().byId("amountBots").getValue();
 				let killerActivated = this.getView().byId("playWithKiller").getState();
 				let answer = {
@@ -112,8 +107,7 @@ sap.ui.define([
 						killerActivated, killerActivated
 					}
 				}
-				//console.log(answer);
-				if(answer != undefined){// TODO: Check data is filled in
+				if(answer != undefined){
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
 						type: "POST",
@@ -146,7 +140,7 @@ sap.ui.define([
 							this.oEscapePreventDialog.open();
 
 
-							this.oDefaultDialog.open();
+							//this.oDefaultDialog.open();
 						} else {
 							if (oData.checks.wapen) {
 								this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");

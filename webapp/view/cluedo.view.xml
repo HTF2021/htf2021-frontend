@@ -11,11 +11,12 @@
 				<Page
 					id="page"
 					title="{i18n>title}"
+					enableScrolling="false"
 				>
 					<content>
 						<HBox id="grondplannHBox">
 							<VBox>
-							<!-- Buttons voor kamers -->
+							
 							<HBox>
 							<Button
 								id="balzaalButton"
@@ -90,40 +91,28 @@
 								visible= "false"
 							/>
 							</HBox>
-							<!-- Grondplan -->
+							
 							<Image
 								id="grondplanImg"
 								width="100%"
 								visible= "false"
 							/>
 							</VBox>
-							<!-- Startbutton -->
+							
 							<VBox id="controlVBox" alignItems="Start">
-							<!-- Start/Restart button -->
-							<!-- <Toolbar>
-							<ToolbarSpacer/>
-								<Title
-								id="startTitle"
-								text="Welkom bij Flexso cluedo, duik in een kamer en ontmasker de moordenaar."
-								level="H1"
-							/>
-							<ToolbarSpacer/>
-							</Toolbar> -->
 							
 							<Image
 								id= "startImage"
 								width = "75%"
 							/>
 							<HBox id="botKillerHBox">
+							<VBox>
+							<Label text="Choose the amount of opponents and whether or not you want to take on the killer: " class="sapUiTinyMargin"/>
 							<HBox>
 								<Label text="Add some bots: " class="sapUiSmallMargin"/>
 								<Slider id="amountBots" min="0" max="4" enableTickmarks="true" >
 									<ResponsiveScale tickmarksBetweenLabels="1"/>
 								</Slider>
-								<!-- <Input
-									id="inputNumber"
-									type="Number"
-									placeholder="Enter a max of 4 bots" /> -->
 							</HBox>
 							<HBox>
 								<Label text="Play with killer: " class="sapUiSmallMargin"/>
@@ -133,6 +122,7 @@
 									</layoutData>
 								</Switch>
 							</HBox>
+							</VBox>
 							</HBox>	
 								<Button
 									id="start"
@@ -144,7 +134,7 @@
 									press="onStartPress"
 									class="sapUiTinyMargin"
 								/>
-								<!-- Comboboxes -->
+								
 								<HBox id="wapenHBox">
 									<ComboBox
 										id="wapen"
@@ -203,7 +193,7 @@
 										class="size1">
 									</core:Icon>
 								</HBox>
-								<!-- Validate button -->
+								
 								<Button
 									id="valideer"
 									visible= "false"
@@ -214,6 +204,79 @@
 									press="onValidatePress"
 									class="sapUiTinyMargin"
 								/>
+
+								<HBox id="bot1HBox" visible="false">
+									<Label text="Bot 1: " class="sapUiTinyMargin"/>
+									<core:Icon 
+										id="bot1WapenIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot1DaderIcon"
+										src="sap-icon://accept"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot1KamerIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+								</HBox>
+								<HBox id="bot2HBox" visible="false">
+									<Label text="Bot 2: " class="sapUiTinyMargin"/>
+									<core:Icon 
+										id="bot2WapenIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot2DaderIcon"
+										src="sap-icon://accept"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot2KamerIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+								</HBox>
+								<HBox id="bot3HBox" visible="false">
+									<Label text="Bot 3: " class="sapUiTinyMargin"/>
+									<core:Icon 
+										id="bot3WapenIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot3DaderIcon"
+										src="sap-icon://accept"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot3KamerIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+								</HBox>
+								<HBox id="bot4HBox" visible="false">
+									<Label text="Bot 4: " class="sapUiTinyMargin"/>
+									<core:Icon 
+										id="bot4WapenIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot4DaderIcon"
+										src="sap-icon://accept"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+									<core:Icon 
+										id="bot4KamerIcon"
+										src="sap-icon://decline"
+										class="size1 sapUiTinyMargin">
+									</core:Icon>
+								</HBox>
 							</VBox>
 						</HBox>
 					</content>
