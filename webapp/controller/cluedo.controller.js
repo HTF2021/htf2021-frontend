@@ -107,7 +107,7 @@ sap.ui.define([
 						killerActivated, killerActivated
 					}
 				}
-				if(answer != undefined){
+				if (answer != undefined) {
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
 						type: "POST",
@@ -116,32 +116,23 @@ sap.ui.define([
 						data: oData,
 						contenttype: "application/json"
 					}).then((oData, textstatus, jqXHR) => {
+
+						console.log(oData);
+						if (amountOfBots > 0) {
+							this._setBotOnBoard(oData);
+						}
+
 						if (oData.checks.dader === true && oData.checks.wapen === true && oData.checks.kamer === true) {
+							var title = "You won!";
+							var message = "Congrats you won a game of Flexso Cluedo!";
+
 							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
 							this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
 							this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
 
-							if (!this.oEscapePreventDialog) {
-								this.oEscapePreventDialog = new Dialog({
-									title: "Congrats you win!",
-									content: new Text({ text: "Congrats you won this game of Flexso Cluedo!" }),
-									type: DialogType.Message,
-									buttons: [
-										new Button({
-											text: "Play again",
-											press: function () {
-												this.oEscapePreventDialog.close();
-												this.onStartPress();
-											}.bind(this)
-										})
-									]
-								});
-							}
-							this.oEscapePreventDialog.open();
-
-
-							//this.oDefaultDialog.open();
+							this._endOfGameDialog(title, message);
 						} else {
+
 							if (oData.checks.wapen) {
 								this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
 							} else {
@@ -159,12 +150,74 @@ sap.ui.define([
 							}
 						}
 					}).catch(() => {
-						MessageToast.show("Could check the answer. Please try again.");
+						MessageToast.show("Could not check the answer. Please try again.");
 					});
 				}
 			},
+			_endOfGameDialog: function (title, message) {
+				if (!this.oEscapePreventDialog) {
+					this.oEscapePreventDialog = new Dialog({
+						title: title,
+						content: new Text({ text: message }),
+						type: DialogType.Message,
+						buttons: [
+							new Button({
+								text: "Play again",
+								press: function () {
+									this.oEscapePreventDialog.close();
+									this.onStartPress();
+								}.bind(this)
+							})
+						]
+					});
+				}
+				this.oEscapePreventDialog.open();
+			},
+			_setBotOnBoard: function (botData) {
+				this._setButtonsEnabled();
+				for (let i = 0; i < botData.botGuesses.length; i++) {
+					var botKamer = botData.botGuesses[i].kamer.name
+					this.getView().byId(botKamer.toLowerCase() + "Button").setType("Attention");
+					this.getView().byId(botKamer.toLowerCase() + "Button").setEnabled(false);
+				}
+			},
+			_displayBotGuesses(botData) {
+				for (let i = 0; i < botData.botGuesses.length; i++) {
+					var botKamerValue = botData.botGuesses[i].kamer; //Change to get true or false according to data retrieval 
+					var botWapenValue = botData.botGuesses[i].wapen; //Change to get true or false according to data retrieval 
+					var botDaderValue = botData.botGuesses[i].dader; //Change to get true or false according to data retrieval 
+
+					var botNr = i + 1;
+					this.getView().byId("bot" + botNr + "HBox").setVisible(true);
+					if (botKamerValue) {
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://accept");
+					} else {
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://decline");
+					}
+					if (botWapenValue) {
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://accept");
+					} else {
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://decline");
+					}
+					if (botDaderValue) {
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://accept");
+					} else {
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://decline");
+					}
+				}
+			},
+			_setButtonsEnabled: function () {
+				this.getView().byId("balzaalButton").setEnabled(true);
+				this.getView().byId("bibliotheekButton").setEnabled(true);
+				this.getView().byId("biljartkamerButton").setEnabled(true);
+				this.getView().byId("eetkamerButton").setEnabled(true);
+				this.getView().byId("halButton").setEnabled(true);
+				this.getView().byId("keukenButton").setEnabled(true);
+				this.getView().byId("serreButton").setEnabled(true);
+				this.getView().byId("studeerkamerButton").setEnabled(true);
+				this.getView().byId("zitkamerButton").setEnabled(true);
+			},
 			onBalzaalPress: function () {
-				MessageToast.show("Balzaal");
 				this.getView().byId("kamer").setSelectedKey("0");
 				this.getView().byId("kamer").setValue("Balzaal");
 
@@ -179,7 +232,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onBibliotheekPress: function () {
-				MessageToast.show("Bibliotheek");
 				this.getView().byId("kamer").setSelectedKey("1");
 				this.getView().byId("kamer").setValue("Bibliotheek");
 
@@ -194,7 +246,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onBiljartkamerPress: function () {
-				MessageToast.show("Biljartkamer");
 				this.getView().byId("kamer").setSelectedKey("2");
 				this.getView().byId("kamer").setValue("Biljartkamer");
 
@@ -209,7 +260,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onEetkamerPress: function () {
-				MessageToast.show("Eetkamer");
 				this.getView().byId("kamer").setSelectedKey("3");
 				this.getView().byId("kamer").setValue("Eetkamer");
 
@@ -224,7 +274,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onHalPress: function () {
-				MessageToast.show("Hal");
 				this.getView().byId("kamer").setSelectedKey("4");
 				this.getView().byId("kamer").setValue("Hal");
 
@@ -239,7 +288,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onKeukenPress: function () {
-				MessageToast.show("Keuken");
 				this.getView().byId("kamer").setSelectedKey("5");
 				this.getView().byId("kamer").setValue("Keuken");
 
@@ -254,7 +302,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onSerrePress: function () {
-				MessageToast.show("Serre");
 				this.getView().byId("kamer").setSelectedKey("6");
 				this.getView().byId("kamer").setValue("Serre");
 
@@ -269,7 +316,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onStudeerkamerPress: function () {
-				MessageToast.show("Studeerkamer");
 				this.getView().byId("kamer").setSelectedKey("7");
 				this.getView().byId("kamer").setValue("Studeerkamer");
 
@@ -284,7 +330,6 @@ sap.ui.define([
 				this.getView().byId("zitkamerButton").setType("Reject");
 			},
 			onZitkamerPress: function () {
-				MessageToast.show("Zitkamer");
 				this.getView().byId("kamer").setSelectedKey("8");
 				this.getView().byId("kamer").setValue("Zitkamer");
 
