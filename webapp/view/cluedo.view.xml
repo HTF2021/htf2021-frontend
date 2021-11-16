@@ -103,7 +103,7 @@
 							
 							<Image
 								id= "startImage"
-								width = "75%"
+								width = "65%"
 							/>
 							<HBox id="botKillerHBox">
 							<VBox>

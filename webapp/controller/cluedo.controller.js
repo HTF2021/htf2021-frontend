@@ -15,8 +15,8 @@ sap.ui.define([
 		Button,
 		Text) {
 		"use strict";
+		var botStatuses = [true, true, true, true];
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
-
 			onInit: function () {
 				$.ajax({
 					url: "http://localhost:3000/data",
@@ -31,8 +31,10 @@ sap.ui.define([
 					let startPlan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[0].url;
 					this.getView().byId("startImage").setProperty("src", startPlan);
 				}).catch(() => {
-					MessageToast.show("Could not load game data.");
+					MessageToast.show(this.getView().getModel("i18n").getProperty("loadDataFailed"));
 				});
+
+				
 			},
 			_startNewGame: function () {
 				$.ajax({
@@ -41,20 +43,20 @@ sap.ui.define([
 					cache: false,
 					accept: "application/json"
 				}).then((oData, textstatus, jqXHR) => {
-					MessageToast.show("New game started!");
+					MessageToast.show(this.getView().getModel("i18n").getProperty("newGame"));
 				}).catch(() => {
-					MessageToast.show("Could not start new game.");
+					MessageToast.show(this.getView().getModel("i18n").getProperty("newGameFailed"));
 				});
 			},
 
 			onStartPress: function () {
 				var startButton = this.getView().byId("start");
 				if (startButton.getText() == "Start") {
-					startButton.setText("game started")
-					this.getView().byId("startImage").setVisible(false);
+					startButton.setText("game started");
 					startButton.setVisible(false);
+					this.getView().byId("startImage").setVisible(false);
+					
 					this.getView().byId("botKillerHBox").setVisible(false);
-
 					this.getView().byId("balzaalButton").setVisible(true);
 					this.getView().byId("bibliotheekButton").setVisible(true);
 					this.getView().byId("biljartkamerButton").setVisible(true);
@@ -70,9 +72,6 @@ sap.ui.define([
 					this.getView().byId("dader").setVisible(true);
 					this.getView().byId("kamer").setVisible(true);
 					this.getView().byId("valideer").setVisible(true);
-
-					console.log(this.getView().byId("amountBots").getValue());
-					console.log(this.getView().byId("playWithKiller").getState());
 				} else {
 					this.getView().byId("wapen").setValue(null);
 					this.getView().byId("dader").setValue(null);
@@ -81,10 +80,12 @@ sap.ui.define([
 					this.getView().byId('daderIcon').setVisible(false);
 					this.getView().byId('wapenIcon').setVisible(false);
 					this.getView().byId('kamerIcon').setVisible(false);
+
+					for(let botNr = 1; botNr <= 4; botNr++){
+						this.getView().byId("bot" + botNr + "HBox").setVisible(false);
+					}
 				}
-
 				this._startNewGame();
-
 			},
 			onValidatePress: function (evt) {
 				let amountOfBots = this.getView().byId("amountBots").getValue();
@@ -104,7 +105,8 @@ sap.ui.define([
 					data: {
 						answer: answer,
 						amountOfBots: amountOfBots,
-						killerActivated, killerActivated
+						killerActivated: killerActivated,
+						botStatuses: botStatuses
 					}
 				}
 				if (answer != undefined) {
@@ -116,15 +118,33 @@ sap.ui.define([
 						data: oData,
 						contenttype: "application/json"
 					}).then((oData, textstatus, jqXHR) => {
-
+						//Log eruit na testen
+						botStatuses = oData.statuses.bots;
 						console.log(oData);
-						if (amountOfBots > 0) {
-							this._setBotOnBoard(oData);
+						console.log(oData.statuses.player);
+						if(oData.statuses.player == false){
+							var title = this.getView().getModel("i18n").getProperty("titleKillerKilledPlayer");
+							var message = this.getView().getModel("i18n").getProperty("messageKillerKilledPlayer");
+							this._endOfGameDialog(title, message);
 						}
 
-						if (oData.checks.dader === true && oData.checks.wapen === true && oData.checks.kamer === true) {
-							var title = "You won!";
-							var message = "Congrats you won a game of Flexso Cluedo!";
+						if (amountOfBots > 0) {
+							this._setBotOnBoard(oData);
+							this._displayBotGuesses(oData);
+
+							for(let botNr = 0; botNr < oData.checks.bots.length; botNr ++){
+								if(oData.checks.bots[botNr].dader == true && oData.checks.bots[botNr].wapen == true && oData.checks.bots[botNr].kamer == true){
+								var title = this.getView().getModel("i18n").getProperty("titleBotWon");
+								var message = this.getView().getModel("i18n").getProperty("messageBotWon");
+								this._endOfGameDialog(title, message);
+								}
+							}
+							
+						}
+
+						if (oData.checks.player.dader === true && oData.checks.player.wapen === true && oData.checks.player.kamer === true) {
+							var title = this.getView().getModel("i18n").getProperty("titlePlayerWon");
+							var message = this.getView().getModel("i18n").getProperty("messagePlayerWon");
 
 							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
 							this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
@@ -132,25 +152,10 @@ sap.ui.define([
 
 							this._endOfGameDialog(title, message);
 						} else {
-
-							if (oData.checks.wapen) {
-								this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
-							} else {
-								this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
-							}
-							if (oData.checks.dader) {
-								this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
-							} else {
-								this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
-							}
-							if (oData.checks.kamer) {
-								this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
-							} else {
-								this.getView().byId('kamerIcon').setProperty("src", "sap-icon://decline");
-							}
+							this._displayPlayerGuesses(oData);
 						}
 					}).catch(() => {
-						MessageToast.show("Could not check the answer. Please try again.");
+						MessageToast.show(this.getView().getModel("i18n").getProperty("checkFailed"));
 					});
 				}
 			},
@@ -162,7 +167,7 @@ sap.ui.define([
 						type: DialogType.Message,
 						buttons: [
 							new Button({
-								text: "Play again",
+								text: this.getView().getModel("i18n").getProperty("playAgain"),
 								press: function () {
 									this.oEscapePreventDialog.close();
 									this.onStartPress();
@@ -175,19 +180,36 @@ sap.ui.define([
 			},
 			_setBotOnBoard: function (botData) {
 				this._setButtonsEnabled();
-				for (let i = 0; i < botData.botGuesses.length; i++) {
-					var botKamer = botData.botGuesses[i].kamer.name
+				for (let i = 0; i < botData.botLocations.length; i++) {
+					var botKamer = botData.botLocations[i]
 					this.getView().byId(botKamer.toLowerCase() + "Button").setType("Attention");
 					this.getView().byId(botKamer.toLowerCase() + "Button").setEnabled(false);
 				}
 			},
-			_displayBotGuesses(botData) {
-				for (let i = 0; i < botData.botGuesses.length; i++) {
-					var botKamerValue = botData.botGuesses[i].kamer; //Change to get true or false according to data retrieval 
-					var botWapenValue = botData.botGuesses[i].wapen; //Change to get true or false according to data retrieval 
-					var botDaderValue = botData.botGuesses[i].dader; //Change to get true or false according to data retrieval 
+			_displayPlayerGuesses: function(playerData){
+				if (playerData.checks.player.wapen) {
+					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
+				} else {
+					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
+				}
+				if (playerData.checks.player.dader) {
+					this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
+				} else {
+					this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
+				}
+				if (playerData.checks.player.kamer) {
+					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
+				} else {
+					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://decline");
+				}
+			},
+			_displayBotGuesses: function(botData) {
+				for (let i = 0; i < botData.checks.bots.length; i++) {
+					var botKamerValue = botData.checks.bots[i].kamer;
+					var botWapenValue = botData.checks.bots[i].wapen;
+					var botDaderValue = botData.checks.bots[i].dader;
 
-					var botNr = i + 1;
+					let botNr = i + 1;
 					this.getView().byId("bot" + botNr + "HBox").setVisible(true);
 					if (botKamerValue) {
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://accept");
