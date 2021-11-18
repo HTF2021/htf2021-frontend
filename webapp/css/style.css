@@ -17,6 +17,9 @@
 .size5 {
 	font-size : 10rem;
 }
+.iconMarginTop {
+	padding-top: 11px;
+}
 
 @media (max-width:599px) {
 	.size1 {

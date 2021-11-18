@@ -11,130 +11,128 @@
 				<Page
 					id="page"
 					title="{i18n>title}"
-					enableScrolling="false"
+					enableScrolling="true"
 				>
 					<content>
 						<HBox id="grondplannHBox">
 							<VBox>
-							
-							<HBox>
-							<Button
-								id="balzaalButton"
-								text="Balzaal"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onBalzaalPress"
-								visible= "false"
-							/>
-							<Button
-								id="bibliotheekButton"
-								text="Bibliotheek"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onBibliotheekPress"
-								visible= "false"
-							/>
-							<Button
-								id="biljartkamerButton"
-								text="Biljartkamer"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onBiljartkamerPress"
-								visible= "false"
-							/>
-							<Button
-								id="eetkamerButton"
-								text="Eetkamer"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onEetkamerPress"
-								visible= "false"
-							/>
-							<Button
-								id="halButton"
-								text="Hal"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onHalPress"
-								visible= "false"
-							/>
-							<Button
-								id="keukenButton"
-								text="Keuken"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onKeukenPress"
-								visible= "false"
-							/>
-							<Button
-								id="serreButton"
-								text="Serre"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onSerrePress"
-								visible= "false"
-							/>
-							<Button
-								id="studeerkamerButton"
-								text="Studeerkamer"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onStudeerkamerPress"
-								visible= "false"
-							/>
-							<Button
-								id="zitkamerButton"
-								text="Zitkamer"
-								type="Reject"
-								class="sapUiTinyMargin"
-								press="onZitkamerPress"
-								visible= "false"
-							/>
-							</HBox>
-							
-							<Image
-								id="grondplanImg"
-								width="100%"
-								visible= "false"
-							/>
-							</VBox>
-							
-							<VBox id="controlVBox" alignItems="Start">
-							
-							<Image
-								id= "startImage"
-								width = "65%"
-							/>
-							<HBox id="botKillerHBox">
-							<VBox>
-							<Label text="Choose the amount of opponents and whether or not you want to take on the killer: " class="sapUiTinyMargin"/>
-							<HBox>
-								<Label text="Add some bots: " class="sapUiSmallMargin"/>
-								<Slider id="amountBots" min="0" max="4" enableTickmarks="true" >
-									<ResponsiveScale tickmarksBetweenLabels="1"/>
-								</Slider>
-							</HBox>
-							<HBox>
-								<Label text="Play with killer: " class="sapUiSmallMargin"/>
-								<Switch id="playWithKiller" type="AcceptReject" >
-									<layoutData>
-										<FlexItemData growFactor="1" />
-									</layoutData>
-								</Switch>
-							</HBox>
-							</VBox>
-							</HBox>	
-								<Button
-									id="start"
-									activeIcon=""
-									icon="sap-icon://begin"
-									text="Start"
-									type="Accept"
-									width="210px"
-									press="onStartPress"
-									class="sapUiTinyMargin"
-								/>
+								<HBox>
+									<Button
+										id="balzaalButton"
+										text="Balzaal"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onBalzaalPress"
+										visible="false"
+									/>
+									<Button
+										id="bibliotheekButton"
+										text="Bibliotheek"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onBibliotheekPress"
+										visible= "false"
+									/>
+									<Button
+										id="biljartkamerButton"
+										text="Biljartkamer"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onBiljartkamerPress"
+										visible= "false"
+									/>
+									<Button
+										id="eetkamerButton"
+										text="Eetkamer"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onEetkamerPress"
+										visible= "false"
+									/>
+									<Button
+										id="halButton"
+										text="Hal"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onHalPress"
+										visible= "false"
+									/>
+									<Button
+										id="keukenButton"
+										text="Keuken"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onKeukenPress"
+										visible= "false"
+									/>
+									<Button
+										id="serreButton"
+										text="Serre"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onSerrePress"
+										visible= "false"
+									/>
+									<Button
+										id="studeerkamerButton"
+										text="Studeerkamer"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onStudeerkamerPress"
+										visible= "false"
+									/>
+									<Button
+										id="zitkamerButton"
+										text="Zitkamer"
+										type="Reject"
+										class="sapUiTinyMargin"
+										press="onZitkamerPress"
+										visible= "false"
+									/>
+								</HBox>
 								
+								<Image
+									id="grondplanImg"
+									width="100%"
+									visible= "false"
+								/>
+							</VBox>
+							<VBox id="controlVBox" alignItems="Start">
+								<HBox id="botKillerHBox">
+									<VBox>
+										<Label text="{i18n>startQuestion}" class="sapUiTinyMargin"/>
+										<HBox>
+											<Label text="{i18n>addBots}" class="sapUiSmallMargin"/>
+											<Slider id="amountBots" min="0" max="4" enableTickmarks="true" >
+												<ResponsiveScale tickmarksBetweenLabels="1"/>
+											</Slider>
+										</HBox>
+										<HBox>
+											<Label text="{i18n>addKiller}" class="sapUiSmallMargin"/>
+											<Switch id="playWithKiller" type="AcceptReject" >
+												<layoutData>
+													<FlexItemData growFactor="1" />
+												</layoutData>
+											</Switch>
+										</HBox>
+										<HBox>
+											<Button
+												id="start"
+												activeIcon=""
+												icon="sap-icon://begin"
+												text="{i18n>startButton}"
+												type="Accept"
+												width="210px"
+												press="onStartPress"
+												class="sapUiTinyMargin"
+											/>
+										</HBox>
+										<Image
+											id= "startImage"
+											width = "65%"
+										/>
+									</VBox>
+								</HBox>
 								<HBox id="wapenHBox">
 									<ComboBox
 										id="wapen"
@@ -142,6 +140,7 @@
 										width= "210px"
 										maxWidth="650px"
 										class="sapUiTinyMargin"
+										change="changeWapenImage"
 										items="{
 											path: 'cluedoData>/wapens',
 											sorter: { path: 'id' }
@@ -150,8 +149,12 @@
 									</ComboBox>
 									<core:Icon 
 										id="wapenIcon"
-										class="size1">
+										class="size1 iconMarginTop">
 									</core:Icon>
+									<Image
+										id= "wapenImage"
+										width = "50px"
+									/>
 								</HBox>
 								<HBox id="daderHBox">
 									<ComboBox
@@ -160,19 +163,23 @@
 										width= "210px"
 										maxWidth="650px"
 										class="sapUiTinyMargin"
+										change=".changeDaderImage"
 										items="{
 											path: 'cluedoData>/daders'
 										}">
 										<items>
 											<core:Item key="{cluedoData>id}" text="{cluedoData>name}" />
 										</items>
-										
 									</ComboBox>
 									<core:Icon 
 										id="daderIcon"
-										class="size1">
+										class="size1 iconMarginTop">
 									</core:Icon>
 								</HBox>
+								<Image
+									id= "daderImage"
+									width = "50px"
+								/>
 								<HBox id="kamerHBox">
 									<ComboBox
 										id="kamer"
@@ -181,19 +188,22 @@
 										width= "210px"
 										maxWidth="650px"
 										class="sapUiTinyMargin"
+										change=".changeKamerImage"
 										items = "{path: 'cluedoData>/kamers'}"
 										>
 										<items>
 											<core:Item key="{cluedoData>id}" text="{cluedoData>name}" />
 										</items>
-										
 									</ComboBox>
 									<core:Icon 
 										id="kamerIcon"
-										class="size1">
+										class="size1 iconMarginTop">
 									</core:Icon>
 								</HBox>
-								
+								<Image
+									id= "kamerImage"
+									width = "50px"
+								/>
 								<Button
 									id="valideer"
 									visible= "false"
@@ -204,7 +214,6 @@
 									press="onValidatePress"
 									class="sapUiTinyMargin"
 								/>
-
 								<HBox id="bot1HBox" visible="false">
 									<Label text="Bot 1: " class="sapUiTinyMargin"/>
 									<core:Icon 
@@ -259,6 +268,7 @@
 										class="size1 sapUiTinyMargin">
 									</core:Icon>
 								</HBox>
+								<!-- Waardes bot 4-->
 								<HBox id="bot4HBox" visible="false">
 									<Label text="Bot 4: " class="sapUiTinyMargin"/>
 									<core:Icon 

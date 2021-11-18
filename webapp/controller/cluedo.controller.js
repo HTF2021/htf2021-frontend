@@ -5,7 +5,8 @@ sap.ui.define([
 	"sap/m/Dialog",
 	"sap/m/DialogType",
 	"sap/m/Button",
-	"sap/m/Text"
+	"sap/m/Text",
+	"sap/ui/core/BusyIndicator"
 ],
 	function (Controller,
 		MessageToast,
@@ -13,9 +14,11 @@ sap.ui.define([
 		Dialog,
 		DialogType,
 		Button,
-		Text) {
+		Text,
+		BusyIndicator) {
 		"use strict";
 		var botStatuses = [true, true, true, true];
+		const dataBaseUrl = "https://htf-2021.herokuapp.com";
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
 			onInit: function () {
 				$.ajax({
@@ -25,16 +28,15 @@ sap.ui.define([
 					accept: "application/json"
 				}).then((oData, textstatus, jqXHR) => {
 					this.getView().setModel(new JSONModel(oData), 'cluedoModel');
-					let grondplan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[1].url;
+					const grondplan = dataBaseUrl + this.getView().getModel('cluedoModel').getData().grondplannen[1].url;
 					this.getView().byId("grondplanImg").setProperty("src", grondplan);
 
-					let startPlan = "https://htf-2021.herokuapp.com" + this.getView().getModel('cluedoModel').getData().grondplannen[0].url;
-					this.getView().byId("startImage").setProperty("src", startPlan);
+					const startImage = dataBaseUrl + this.getView().getModel('cluedoModel').getData().others[0].url;
+					this.getView().byId("startImage").setProperty("src", startImage);
+					this.getView().getModel('cluedoModel').setProperty("gameStarted", false);
 				}).catch(() => {
 					MessageToast.show(this.getView().getModel("i18n").getProperty("loadDataFailed"));
 				});
-
-				
 			},
 			_startNewGame: function () {
 				$.ajax({
@@ -49,10 +51,23 @@ sap.ui.define([
 				});
 			},
 
+			changeWapenImage: function(){
+				const selectedItemText = this.getView().byId("wapen").getSelectedItem().getText();
+				const selectedWapen = this.getView().getModel("cluedoModel").getData().wapens.filter((ele)=> ele.name === selectedItemText)[0];
+				this.getView().byId("startImage").setProperty("src", dataBaseUrl + selectedWapen.url);
+			},
+
+			changeDaderImage: function(){
+				
+			},
+
+			changeKamerImage: function(){
+				
+			},
+
 			onStartPress: function () {
 				var startButton = this.getView().byId("start");
-				if (startButton.getText() == "Start") {
-					startButton.setText("game started");
+				if (startButton.getText() === "Start") {
 					startButton.setVisible(false);
 					this.getView().byId("startImage").setVisible(false);
 					
@@ -87,10 +102,18 @@ sap.ui.define([
 				}
 				this._startNewGame();
 			},
+			_parseBotStatuses(statuses){
+				let parsedvalues = [];
+				statuses.forEach(element => {
+					parsedvalues.push((element === true))
+				});
+				return parsedvalues;
+			},
 			onValidatePress: function (evt) {
-				let amountOfBots = this.getView().byId("amountBots").getValue();
-				let killerActivated = this.getView().byId("playWithKiller").getState();
-				let answer = {
+				BusyIndicator.show(0);
+				const amountOfBots = this.getView().byId("amountBots").getValue();
+				const killerActivated = this.getView().byId("playWithKiller").getState();
+				const answer = {
 					"wapen": {
 						"id": parseInt(this.getView().byId("wapen").getSelectedKey())
 					},
@@ -101,14 +124,14 @@ sap.ui.define([
 						"id": parseInt(this.getView().byId("kamer").getSelectedKey())
 					}
 				}
-				var oData = {
+				const oData = {
 					data: {
 						answer: answer,
 						amountOfBots: amountOfBots,
 						killerActivated: killerActivated,
 						botStatuses: botStatuses
 					}
-				}
+				};
 				if (answer != undefined) {
 					$.ajax({
 						url: "http://localhost:3000/check_answer",
@@ -119,7 +142,7 @@ sap.ui.define([
 						contenttype: "application/json"
 					}).then((oData, textstatus, jqXHR) => {
 						//Log eruit na testen
-						botStatuses = oData.statuses.bots;
+						botStatuses = this._parseBotStatuses(oData.statuses.bots);
 						console.log(oData);
 						console.log(oData.statuses.player);
 						if(oData.statuses.player == false){
@@ -134,8 +157,8 @@ sap.ui.define([
 
 							for(let botNr = 0; botNr < oData.checks.bots.length; botNr ++){
 								if(oData.checks.bots[botNr].dader == true && oData.checks.bots[botNr].wapen == true && oData.checks.bots[botNr].kamer == true){
-								var title = this.getView().getModel("i18n").getProperty("titleBotWon");
-								var message = this.getView().getModel("i18n").getProperty("messageBotWon");
+								const title = this.getView().getModel("i18n").getProperty("titleBotWon");
+								const message = this.getView().getModel("i18n").getProperty("messageBotWon");
 								this._endOfGameDialog(title, message);
 								}
 							}
@@ -143,8 +166,8 @@ sap.ui.define([
 						}
 
 						if (oData.checks.player.dader === true && oData.checks.player.wapen === true && oData.checks.player.kamer === true) {
-							var title = this.getView().getModel("i18n").getProperty("titlePlayerWon");
-							var message = this.getView().getModel("i18n").getProperty("messagePlayerWon");
+							const title = this.getView().getModel("i18n").getProperty("titlePlayerWon");
+							const message = this.getView().getModel("i18n").getProperty("messagePlayerWon");
 
 							this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
 							this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
@@ -154,8 +177,10 @@ sap.ui.define([
 						} else {
 							this._displayPlayerGuesses(oData);
 						}
+						BusyIndicator.hide();
 					}).catch(() => {
 						MessageToast.show(this.getView().getModel("i18n").getProperty("checkFailed"));
+						BusyIndicator.hide();
 					});
 				}
 			},
@@ -181,9 +206,11 @@ sap.ui.define([
 			_setBotOnBoard: function (botData) {
 				this._setButtonsEnabled();
 				for (let i = 0; i < botData.botLocations.length; i++) {
-					var botKamer = botData.botLocations[i]
-					this.getView().byId(botKamer.toLowerCase() + "Button").setType("Attention");
-					this.getView().byId(botKamer.toLowerCase() + "Button").setEnabled(false);
+					const botKamer = botData.botLocations[i]
+					if(botKamer){
+						this.getView().byId(botKamer.toLowerCase() + "Button").setType("Attention");
+						this.getView().byId(botKamer.toLowerCase() + "Button").setEnabled(false);
+					}
 				}
 			},
 			_displayPlayerGuesses: function(playerData){
@@ -205,9 +232,9 @@ sap.ui.define([
 			},
 			_displayBotGuesses: function(botData) {
 				for (let i = 0; i < botData.checks.bots.length; i++) {
-					var botKamerValue = botData.checks.bots[i].kamer;
-					var botWapenValue = botData.checks.bots[i].wapen;
-					var botDaderValue = botData.checks.bots[i].dader;
+					const botKamerValue = botData.checks.bots[i].kamer;
+					const botWapenValue = botData.checks.bots[i].wapen;
+					const botDaderValue = botData.checks.bots[i].dader;
 
 					let botNr = i + 1;
 					this.getView().byId("bot" + botNr + "HBox").setVisible(true);
