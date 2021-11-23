@@ -19,76 +19,43 @@ sap.ui.define([
 		"use strict";
 		var botStatuses = [true, true, true, true];
 		const dataBaseUrl = "https://htf-2021.herokuapp.com";
+		const localBaseUrl = "http://localhost:3000";
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
 			// REQUIRED
 			onInit: function () {
-				// Load data from "http://localhost:3000/data" into JSONModel named "cluedoModel" and make it available for the View
+				// Load data from const localBaseUrl + "/data" into JSONModel named "cluedoModel" and make it available for the View
 				// After data call success, set image source from model data ("startImage" -> Title HTF, "grondplanImg" -> Grondplan Spel)
-
-
-				/*$.ajax({
-					url: "http://localhost:3000/data",
-					type: "GET",
-					cache: false,
-					accept: "application/json"
-				}).then((oData, textstatus, jqXHR) => {
-					this.getView().setModel(new JSONModel(oData), 'cluedoModel');
-					const startImage = dataBaseUrl + this.getView().getModel('cluedoModel').getData().others[0].url;
-					this.getView().byId("startImage").setProperty("src", startImage);
-					const grondplan = dataBaseUrl + this.getView().getModel('cluedoModel').getData().grondplannen[1].url;
-					this.getView().byId("grondplanImg").setProperty("src", grondplan);
-				}).catch(() => {
-					MessageToast.show(this.getView().getModel("i18n").getProperty("loadDataFailed"));
-				});*/
 			},
 
 			// REQUIRED
 			onStartPress: function () {
-				// Create new solution to start game using new_solution call
-				// Create playground & show MessageToast (or something creative) when solution has been created
-
-				/*$.ajax({
-					url: "http://localhost:3000/new_solution",
-					type: "GET",
-					cache: false,
-					accept: "application/json"
-				}).then((oData, textstatus, jqXHR) => {
-					// Prepare playground
-					this._buildPlayground();
-					MessageToast.show(this.getView().getModel("i18n").getProperty("newGame"));
-				}).catch(() => {
-					MessageToast.show(this.getView().getModel("i18n").getProperty("newGameFailed"));
-				});*/
+				// Create new solution to start game using const localBaseUrl + "/new_solution" call
+				// Call _buildPlayground function & show MessageToast (or something creative) when solution has been created
 			},
 
 			// BONUS
 			changeWapenImage: function () {
-				/*const selectedItemText = this.getView().byId("wapen").getSelectedItem().getText();
-				const selectedWapen = this.getView().getModel("cluedoModel").getData().wapens.filter((ele) => ele.name === selectedItemText)[0];
-				this.getView().byId("wapenImage").setProperty("src", dataBaseUrl + selectedWapen.url);*/
 			},
 
 			// BONUS
 			changeDaderImage: function () {
-				/*const selectedItemText = this.getView().byId("dader").getSelectedItem().getText();
-				const selectedDader = this.getView().getModel("cluedoModel").getData().daders.filter((ele) => ele.name === selectedItemText)[0];
-				this.getView().byId("daderImage").setProperty("src", dataBaseUrl + selectedDader.url);*/
 			},
 			
 			onValidatePress: function (evt) {
 				const amountOfBots = this.getView().byId("amountBots").getValue();
 				const killerActivated = this.getView().byId("playWithKiller").getState();
 
-				// REQUIRED
+				// REQUIRED: check onClick function for every room button
+				// Get the selected item id for wapen, dader, kamer
 				const answer = {
 					"wapen": {
-						"id": "" //parseInt(this.getView().byId("wapen").getSelectedKey())
+						"id": "" 
 					},
 					"dader": {
-						"id": "" //parseInt(this.getView().byId("dader").getSelectedKey())
+						"id": "" 
 					},
 					"kamer": {
-						"id": "" //parseInt(this.getView().byId("kamer").getSelectedKey())
+						"id": "" 
 					}
 				}
 				const oData = {
@@ -101,7 +68,7 @@ sap.ui.define([
 				};
 				if (answer != undefined) {
 					$.ajax({
-						url: "http://localhost:3000/check_answer",
+						url: localBaseUrl + "/check_answer",
 						type: "POST",
 						cache: false,
 						accept: "*/*",
@@ -115,37 +82,15 @@ sap.ui.define([
 						// PLAYER: REQUIRED
 						this._displayPlayerGuesses(oData);
 						// If the player won, show _endOfGameDialog
-						/*if (oData.checks.player.dader === true && oData.checks.player.wapen === true && oData.checks.player.kamer === true) {
-							const title = this.getView().getModel("i18n").getProperty("titlePlayerWon");
-							const message = this.getView().getModel("i18n").getProperty("messagePlayerWon");
-							this._endOfGameDialog(title, message);
-						}*/
 						
 						// KILLER: BONUS
 						// Check if player died -> show _endOfGameDialog
-						/*if (oData.statuses.player == false) {
-							var title = this.getView().getModel("i18n").getProperty("titleKillerKilledPlayer");
-							var message = this.getView().getModel("i18n").getProperty("messageKillerKilledPlayer");
-							this._endOfGameDialog(title, message);
-						}*/
 
 						// BOTS: BONUS
-						/*if (amountOfBots > 0) {
-							this._setBotOnBoard(oData);
-							this._displayBotGuesses(oData);
-
-							for (let botNr = 0; botNr < oData.checks.bots.length; botNr++) {
-								if(!oData.statuses.bots[botNr]){
-									break;
-								}
-								if (oData.checks.bots[botNr].dader == true && oData.checks.bots[botNr].wapen == true && oData.checks.bots[botNr].kamer == true) {
-									const title = this.getView().getModel("i18n").getProperty("titleBotWon");
-									const message = this.getView().getModel("i18n").getProperty("messageBotWon");
-									this._endOfGameDialog(title, message);
-								}
-							}
-
-						}*/
+						// Add bots to playground & display bot guesses
+						// Check if bot died by killer (if killer is active)
+						// Check if bot won -> show _endOfGameDialog
+						
 					}).catch(() => {
 						MessageToast.show(this.getView().getModel("i18n").getProperty("checkFailed"));
 					});
@@ -153,23 +98,6 @@ sap.ui.define([
 			},
 			_endOfGameDialog: function (title, message) {
 				// Show a dialog with restart button to inform the player.
-				/*if (!this.oEndOfGame) {
-					this.oEndOfGame = new Dialog({
-						title: title,
-						content: new Text({ text: message }),
-						type: DialogType.Message,
-						buttons: [
-							new Button({
-								text: this.getView().getModel("i18n").getProperty("playAgain"),
-								press: function () {
-									this.oEndOfGame.close();
-									this.onStartPress();
-								}.bind(this)
-							})
-						]
-					});
-				}
-				this.oEndOfGame.open();*/
 			},
 			_setBotOnBoard: function (botData) {
 				// Refresh buttons to reposition bots (default true)
@@ -242,51 +170,58 @@ sap.ui.define([
 				}
 			},
 
-			// REQUIRED
-			// Set the correct room in dropdown (for each button);
 			onBalzaalPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("0");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [1, 0, 0, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 
 			onBibliotheekPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("1");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [1, 0, 0, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onBiljartkamerPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("2");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [0, 1, 0, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onEetkamerPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("3");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [0, 0, 1, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onHalPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("4");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 1, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onKeukenPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("5");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [, 0, 0, 0, 0, 1, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onSerrePress: function () {
-				//this.getView().byId("kamer").setSelectedKey("6");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 0, 0, 0, 1, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onStudeerkamerPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("7");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 0, 0, 0, 0, 1, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onZitkamerPress: function () {
-				//this.getView().byId("kamer").setSelectedKey("8");
+				// REQUIRED
+				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 0, 0, 0, 0, 0, 1];
 				this._setKamerButtonSelected(selected);
 			},
