@@ -19,7 +19,7 @@
 								<HBox>
 									<Button
 										id="balzaalButton"
-										text="Balzaal"
+										text="{i18n>balzaal}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onBalzaalPress"
@@ -27,7 +27,7 @@
 									/>
 									<Button
 										id="bibliotheekButton"
-										text="Bibliotheek"
+										text="{i18n>bibliotheek}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onBibliotheekPress"
@@ -35,7 +35,7 @@
 									/>
 									<Button
 										id="biljartkamerButton"
-										text="Biljartkamer"
+										text="{i18n>biljartkamer}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onBiljartkamerPress"
@@ -43,7 +43,7 @@
 									/>
 									<Button
 										id="eetkamerButton"
-										text="Eetkamer"
+										text="{i18n>eetkamer}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onEetkamerPress"
@@ -51,7 +51,7 @@
 									/>
 									<Button
 										id="halButton"
-										text="Hal"
+										text="{i18n>hal}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onHalPress"
@@ -59,7 +59,7 @@
 									/>
 									<Button
 										id="keukenButton"
-										text="Keuken"
+										text="{i18n>keuken}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onKeukenPress"
@@ -67,7 +67,7 @@
 									/>
 									<Button
 										id="serreButton"
-										text="Serre"
+										text="{i18n>serre}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onSerrePress"
@@ -75,7 +75,7 @@
 									/>
 									<Button
 										id="studeerkamerButton"
-										text="Studeerkamer"
+										text="{i18n>studeerkamer}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onStudeerkamerPress"
@@ -83,7 +83,7 @@
 									/>
 									<Button
 										id="zitkamerButton"
-										text="Zitkamer"
+										text="{i18n>zitkamer}"
 										type="Reject"
 										class="sapUiTinyMargin"
 										press="onZitkamerPress"
@@ -175,11 +175,12 @@
 										id="daderIcon"
 										class="size1 iconMarginTop">
 									</core:Icon>
-								</HBox>
-								<Image
+									<Image
 									id= "daderImage"
 									width = "50px"
 								/>
+								</HBox>
+								
 								<HBox id="kamerHBox">
 									<ComboBox
 										id="kamer"
@@ -199,17 +200,18 @@
 										id="kamerIcon"
 										class="size1 iconMarginTop">
 									</core:Icon>
-								</HBox>
-								<Image
+									<Image
 									id= "kamerImage"
 									width = "50px"
 								/>
+								</HBox>
+								
 								<Button
 									id="valideer"
 									visible= "false"
 									activeIcon=""
 									icon="sap-icon://validate"
-									text="Valideer waarden"
+									text="{i18n>valideerWaarden}"
 									width="210px"
 									press="onValidatePress"
 									class="sapUiTinyMargin"
