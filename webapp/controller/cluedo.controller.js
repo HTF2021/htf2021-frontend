@@ -35,15 +35,22 @@ sap.ui.define([
 
 			// BONUS
 			changeWapenImage: function () {
+				// Read image url from model data. Look up the correct image tag in XML view. Then set the image source.
+				// Tip: do not forget dataBaseUrl!
 			},
 
 			// BONUS
 			changeDaderImage: function () {
+				// Read image url from model data. Look up the correct image tag in XML view. Then set the image source.
+				// Tip: do not forget dataBaseUrl!
 			},
 			
 			onValidatePress: function (evt) {
 				const amountOfBots = this.getView().byId("amountBots").getValue();
 				const killerActivated = this.getView().byId("playWithKiller").getState();
+
+				// BONUS
+				// Check if wapen, dader, kamer are selected before going on.
 
 				// REQUIRED: check onClick function for every room button
 				// Get the selected item id for wapen, dader, kamer
@@ -79,12 +86,16 @@ sap.ui.define([
 						this.getView().byId('daderIcon').setVisible(true);
 						this.getView().byId('kamerIcon').setVisible(true);
 
-						// PLAYER: REQUIRED
+						// PLAYER
 						this._displayPlayerGuesses(oData);
+						// REQUIRED
 						// If the player won, show _endOfGameDialog
 						
-						// KILLER: BONUS
+						// KILLER
+						// BONUS
 						// Check if player died -> show _endOfGameDialog
+						// Make Killer visible on screen
+
 
 						// BOTS: BONUS
 						// Add bots to playground & display bot guesses
@@ -97,7 +108,11 @@ sap.ui.define([
 				}
 			},
 			_endOfGameDialog: function (title, message) {
+				// REQUIRED
 				// Show a dialog with restart button to inform the player.
+
+				// BONUS
+				// Maybe add something creative?
 			},
 			_setBotOnBoard: function (botData) {
 				// Refresh buttons to reposition bots (default true)
