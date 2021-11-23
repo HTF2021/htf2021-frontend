@@ -132,6 +132,7 @@ sap.ui.define([
 						"id": parseInt(this.getView().byId("kamer").getSelectedKey())
 					}
 				}
+				botStatuses = this._parseBotStatuses(botStatuses);
 				const oData = {
 					data: {
 						answer: answer,
@@ -233,18 +234,24 @@ sap.ui.define([
 			_displayPlayerGuesses: function (playerData) {
 				if (playerData.checks.player.wapen) {
 					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
+					this.getView().byId('wapenIcon').setProperty("color", "green");
 				} else {
 					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
+					this.getView().byId('wapenIcon').setProperty("color", "red");
 				}
 				if (playerData.checks.player.dader) {
 					this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
+					this.getView().byId('daderIcon').setProperty("color", "green");
 				} else {
 					this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
+					this.getView().byId('daderIcon').setProperty("color", "red");
 				}
 				if (playerData.checks.player.kamer) {
 					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
+					this.getView().byId('kamerIcon').setProperty("color", "green");
 				} else {
 					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://decline");
+					this.getView().byId('kamerIcon').setProperty("color", "red");
 				}
 			},
 			_displayBotGuesses: function (botData) {
@@ -262,18 +269,24 @@ sap.ui.define([
 					this.getView().byId("bot" + botNr + "HBox").setVisible(true);
 					if (botKamerValue) {
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://accept");
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "green");
 					} else {
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://decline");
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "red");
 					}
 					if (botWapenValue) {
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://accept");
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "green");
 					} else {
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://decline");
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "red");
 					}
 					if (botDaderValue) {
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://accept");
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "green");
 					} else {
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://decline");
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "red");
 					}
 				}
 			},
