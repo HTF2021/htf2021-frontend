@@ -21,26 +21,29 @@ sap.ui.define([
 		const dataBaseUrl = "https://htf-2021.herokuapp.com";
 		const localBaseUrl = "http://localhost:3000";
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
-			// REQUIRED
 			onInit: function () {
+				// REQUIRED
 				// Load data from const localBaseUrl + "/data" into JSONModel named "cluedoModel" and make it available for the View
 				// After data call success, set image source from model data ("startImage" -> Title HTF, "grondplanImg" -> Grondplan Spel)
 			},
 
-			// REQUIRED
+			
 			onStartPress: function () {
+				// REQUIRED
 				// Create new solution to start game using const localBaseUrl + "/new_solution" call
-				// Call _buildPlayground function & show MessageToast (or something creative) when solution has been created
+				// When the solution has been created, call _buildPlayground function & show MessageToast (or something creative) when solution has been created
 			},
 
-			// BONUS
+			
 			changeWapenImage: function () {
+				// BONUS
 				// Read image url from model data. Look up the correct image tag in XML view. Then set the image source.
 				// Tip: do not forget dataBaseUrl!
 			},
 
-			// BONUS
+			
 			changeDaderImage: function () {
+				// BONUS
 				// Read image url from model data. Look up the correct image tag in XML view. Then set the image source.
 				// Tip: do not forget dataBaseUrl!
 			},
