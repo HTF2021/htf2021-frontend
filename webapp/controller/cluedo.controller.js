@@ -130,25 +130,31 @@ sap.ui.define([
 			},
 			_displayPlayerGuesses: function (playerData) {
 				if (playerData.checks.player.wapen) {
-					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
+					this.getView().byId('wapenIcon').setVisible(true);
 					this.getView().byId('wapenIcon').setProperty("color", "green");
+					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://accept");
 				} else {
-					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
+					this.getView().byId('wapenIcon').setVisible(true);
 					this.getView().byId('wapenIcon').setProperty("color", "red");
+					this.getView().byId('wapenIcon').setProperty("src", "sap-icon://decline");
 				}
 				if (playerData.checks.player.dader) {
-					this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
+					this.getView().byId('daderIcon').setVisible(true);
 					this.getView().byId('daderIcon').setProperty("color", "green");
+					this.getView().byId('daderIcon').setProperty("src", "sap-icon://accept");
 				} else {
-					this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
+					this.getView().byId('daderIcon').setVisible(true);
 					this.getView().byId('daderIcon').setProperty("color", "red");
+					this.getView().byId('daderIcon').setProperty("src", "sap-icon://decline");
 				}
 				if (playerData.checks.player.kamer) {
-					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
+					this.getView().byId('kamerIcon').setVisible(true);
 					this.getView().byId('kamerIcon').setProperty("color", "green");
+					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://accept");
 				} else {
-					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://decline");
+					this.getView().byId('kamerIcon').setVisible(true);
 					this.getView().byId('kamerIcon').setProperty("color", "red");
+					this.getView().byId('kamerIcon').setProperty("src", "sap-icon://decline");
 				}
 			},
 			_displayBotGuesses: function (botData) {
@@ -165,25 +171,25 @@ sap.ui.define([
 					this.getView().byId("bot" + botNr + "HBox").setVisible(false);
 					this.getView().byId("bot" + botNr + "HBox").setVisible(true);
 					if (botKamerValue) {
-						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://accept");
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "green");
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://accept");
 					} else {
-						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://decline");
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "red");
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://decline");
 					}
 					if (botWapenValue) {
-						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://accept");
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "green");
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://accept");
 					} else {
-						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://decline");
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "red");
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://decline");
 					}
 					if (botDaderValue) {
-						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://accept");
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "green");
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://accept");
 					} else {
-						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://decline");
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "red");
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://decline");
 					}
 				}
 			},

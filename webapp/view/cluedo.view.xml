@@ -189,7 +189,6 @@
 										width= "210px"
 										maxWidth="650px"
 										class="sapUiTinyMargin"
-										change=".changeKamerImage"
 										items = "{path: 'cluedoData>/kamers'}"
 										>
 										<items>
