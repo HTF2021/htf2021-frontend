@@ -75,6 +75,7 @@ sap.ui.define([
 						"id": parseInt(this.getView().byId("kamer").getSelectedKey())
 					}
 				}
+				botStatuses = this._parseBotStatuses(botStatuses);
 				const oData = {
 					data: {
 						answer: answer,
@@ -278,23 +279,29 @@ sap.ui.define([
 					if (botKamerValue) {
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "green");
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://accept");
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "green");
 					} else {
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "red");
 						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("src", "sap-icon://decline");
+						this.getView().byId("bot" + botNr + "KamerIcon").setProperty("color", "red");
 					}
 					if (botWapenValue) {
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "green");
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://accept");
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "green");
 					} else {
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "red");
 						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("src", "sap-icon://decline");
+						this.getView().byId("bot" + botNr + "WapenIcon").setProperty("color", "red");
 					}
 					if (botDaderValue) {
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "green");
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://accept");
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "green");
 					} else {
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "red");
 						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("src", "sap-icon://decline");
+						this.getView().byId("bot" + botNr + "DaderIcon").setProperty("color", "red");
 					}
 				}
 			},
