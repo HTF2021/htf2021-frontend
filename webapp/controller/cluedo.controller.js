@@ -40,7 +40,7 @@ sap.ui.define([
 			onStartPress: function () {
 				$.ajax({
 					url: "http://localhost:3000/new_solution",
-					type: "GET",
+					type: "POST",
 					cache: false,
 					accept: "application/json"
 				}).then((oData, textstatus, jqXHR) => {
@@ -75,7 +75,6 @@ sap.ui.define([
 						"id": parseInt(this.getView().byId("kamer").getSelectedKey())
 					}
 				}
-				botStatuses = this._parseBotStatuses(botStatuses);
 				const oData = {
 					data: {
 						answer: answer,
