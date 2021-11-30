@@ -22,28 +22,28 @@ sap.ui.define([
 		const localBaseUrl = "http://localhost:3000";
 		return Controller.extend("com.flexso.htf2021.controller.cluedo", {
 			onInit: function () {
-				// REQUIRED
+				//FIXME: REQUIRED 1
 				// Load data from const localBaseUrl + "/data" into JSONModel named "cluedoModel" and make it available for the View
 				// After data call success, set image source from model data ("startImage" -> Title HTF, "grondplanImg" -> Grondplan Spel)
 			},
 
 			
 			onStartPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 2
 				// Create new solution to start game using const localBaseUrl + "/new_solution" call
 				// When the solution has been created, call _buildPlayground function & show MessageToast (or something creative) when solution has been created
 			},
 
 			
 			changeWapenImage: function () {
-				// BONUS
+				// TODO: BONUS
 				// Read image url from model data. Look up the correct image tag in XML view. Then set the image source.
 				// Tip: do not forget dataBaseUrl!
 			},
 
 			
 			changeDaderImage: function () {
-				// BONUS
+				// TODO: BONUS
 				// Read image url from model data. Look up the correct image tag in XML view. Then set the image source.
 				// Tip: do not forget dataBaseUrl!
 			},
@@ -52,10 +52,11 @@ sap.ui.define([
 				const amountOfBots = this.getView().byId("amountBots").getValue();
 				const killerActivated = this.getView().byId("playWithKiller").getState();
 
-				// BONUS
+				// TODO: BONUS
 				// Check if wapen, dader, kamer are selected before going on.
 
-				// REQUIRED: check onClick function for every room button
+				// FIXME: REQUIRED 3 
+				// check onClick function for every room button
 				// Get the selected item id for wapen, dader, kamer
 				const answer = {
 					"wapen": {
@@ -91,16 +92,17 @@ sap.ui.define([
 
 						// PLAYER
 						this._displayPlayerGuesses(oData);
-						// REQUIRED
+						// FIXME: REQUIRED 4
 						// If the player won, show _endOfGameDialog
 						
 						// KILLER
-						// BONUS
+						// TODO: BONUS
 						// Check if player died -> show _endOfGameDialog
 						// Make Killer visible on screen
 
 
-						// BOTS: BONUS
+						// BOTS: 
+						//TODO: BONUS
 						// Add bots to playground & display bot guesses
 						// Check if bot died by killer (if killer is active)
 						// Check if bot won -> show _endOfGameDialog
@@ -111,10 +113,10 @@ sap.ui.define([
 				}
 			},
 			_endOfGameDialog: function (title, message) {
-				// REQUIRED
+				// FIXME: REQUIRED 5
 				// Show a dialog with restart button to inform the player.
 
-				// BONUS
+				// TODO: BONUS
 				// Maybe add something creative?
 			},
 			_setBotOnBoard: function (botData) {
@@ -195,56 +197,56 @@ sap.ui.define([
 			},
 
 			onBalzaalPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.1
 				// Set the correct room in dropdown
 				const selected = [1, 0, 0, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 
 			onBibliotheekPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.2
 				// Set the correct room in dropdown
 				const selected = [1, 0, 0, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onBiljartkamerPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.3
 				// Set the correct room in dropdown
 				const selected = [0, 1, 0, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onEetkamerPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.4
 				// Set the correct room in dropdown
 				const selected = [0, 0, 1, 0, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onHalPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.5
 				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 1, 0, 0, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onKeukenPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.6
 				// Set the correct room in dropdown
 				const selected = [, 0, 0, 0, 0, 1, 0, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onSerrePress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.7
 				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 0, 0, 0, 1, 0, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onStudeerkamerPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.8
 				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 0, 0, 0, 0, 1, 0];
 				this._setKamerButtonSelected(selected);
 			},
 			onZitkamerPress: function () {
-				// REQUIRED
+				// FIXME: REQUIRED 3.9
 				// Set the correct room in dropdown
 				const selected = [0, 0, 0, 0, 0, 0, 0, 0, 1];
 				this._setKamerButtonSelected(selected);

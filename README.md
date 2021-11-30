@@ -5,10 +5,10 @@ Hack The Future 2021 SAP UI5 Front-end
 
 The application has been splitted into 3 difficulty levels. 
 
-- #Required -> basic functionalities 
+- #FIXME: REQUIRED -> basic functionalities 
 
-- #Bonus -> advanced functionalities 
+- #TODO: BONUS -> advanced functionalities 
 
-- #Bonus V2 -> expert level functionalities 
+- #TODO: BONUS V2 -> expert level functionalities 
 
 > Hint: Start your hacking experience by completing the basic functionalities first, then progress to the advanced and lastly expert level functionalities. 
